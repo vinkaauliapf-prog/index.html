@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Like and Dislikes (Listening Practice) - Grade VII</title>
+  <!-- Playful Cartoon Rounded Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #1E1B4B;
+      --purple: #8B5CF6;
+      --purple-light: #EDE9FE;
+      --yellow: #FACC15;
+      --yellow-light: #FEF9C3;
+      --pink: #FB7185;
+      --pink-light: #FFE4E6;
+      --blue: #38BDF8;
+      --blue-light: #E0F2FE;
+      --mint: #34D399;
+      --mint-light: #D1FAE5;
+      --orange: #FB923C;
+      --orange-light: #FFEDD5;
+      --cream: #FFFBEB;
+      --white: #FFFFFF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #1E1B4B;
+      font-family: 'Nunito', sans-serif;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Strict 16:9 Widescreen Stage Container */
+    #presentation-stage {
+      width: 100vw;
+      height: 56.25vw; /* 16:9 ratio */
+      max-height: 100vh;
+      max-width: 177.78vh; /* 16:9 ratio */
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Polka-dot subtle cartoon background pattern */
+    #presentation-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(30, 27, 75, 0.08) 2px, transparent 2px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Floating Background Cartoon Doodles */
+    .doodle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+    }
+    .doodle-1 { top: 4%; left: 3%; animation: floatSlow 5s ease-in-out infinite; }
+    .doodle-2 { top: 6%; right: 4%; animation: wiggle 4s ease-in-out infinite; }
+    .doodle-3 { bottom: 11%; left: 3%; animation: bounceSlow 4.5s ease-in-out infinite; }
+    .doodle-4 { bottom: 12%; right: 3%; animation: floatSlow 5.5s ease-in-out infinite reverse; }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(6deg); }
+    }
+    @keyframes bounceSlow {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-14px) scale(1.06); }
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-6deg); }
+      50% { transform: rotate(6deg); }
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92) translateY(18px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes pulsePop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    /* Slide Wrapper */
+    .slide {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: calc(100% - 68px); /* Leave exact space for bottom nav bar */
+      padding: 26px 48px 14px 48px;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: popIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      flex-shrink: 0;
+    }
+
+    .slide-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(28px, 3.1vw, 44px);
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--yellow);
+      padding: 6px 24px;
+      border-radius: 20px;
+      border: 4px solid var(--ink);
+      box-shadow: 5px 5px 0px var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      line-height: 1.15;
+    }
+
+    .topic-pill {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(16px, 1.4vw, 20px);
+      font-weight: 700;
+      background: var(--purple);
+      color: var(--white);
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+      white-space: nowrap;
+    }
+
+    /* Slide Main Content Body */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+      width: 100%;
+    }
+
+    /* Cartoon Card Base */
+    .c-card {
+      background: var(--white);
+      border: 4px solid var(--ink);
+      border-radius: 24px;
+      box-shadow: 6px 6px 0px var(--ink);
+      padding: 18px 22px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .c-btn {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      border: 3.5px solid var(--ink);
+      border-radius: 16px;
+      box-shadow: 4px 4px 0px var(--ink);
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .c-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--ink);
+    }
+    .c-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--ink);
+    }
+
+    /* Bottom Navigation Bar */
+    #nav-bar {
+      position: relative;
+      z-index: 10;
+      height: 68px;
+      width: 100%;
+      background: var(--white);
+      border-top: 4px solid var(--ink);
+      padding: 0 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .nav-btn {
+      font-size: clamp(18px, 1.5vw, 22px);
+      padding: 8px 22px;
+      background: var(--yellow);
+      color: var(--ink);
+    }
+    .nav-btn.next {
+      background: var(--mint);
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .slide-counter {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(18px, 1.5vw, 22px);
+      font-weight: 700;
+      background: var(--purple-light);
+      color: var(--ink);
+      padding: 6px 18px;
+      border-radius: 999px;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0px var(--ink);
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 6px;
+    }
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #E2E8F0;
+      border: 2.5px solid var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active {
+      background: var(--pink);
+      transform: scale(1.28);
+    }
+
+    /* ==================== SLIDE-SPECIFIC STYLES ==================== */
+
+    /* SLIDE 1: COVER */
+    .cover-stage {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      height: 100%;
+      padding: 10px 16px;
+    }
+    .cover-left {
+      flex: 1.25;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .cover-badge {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(18px, 1.6vw, 23px);
+      font-weight: 700;
+      background: var(--pink);
+      color: var(--white);
+      padding: 8px 22px;
+      border-radius: 999px;
+      border: 3.5px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+    .cover-main-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(44px, 5.2vw, 74px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--ink);
+      text-shadow: 4px 4px 0px var(--yellow);
+    }
+    .cover-sub {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(24px, 2.4vw, 34px);
+      font-weight: 700;
+      background: var(--blue-light);
+      color: var(--ink);
+      padding: 10px 24px;
+      border-radius: 18px;
+      border: 3.5px solid var(--ink);
+      box-shadow: 5px 5px 0px var(--ink);
+    }
+    .presenter-box {
+      font-size: clamp(20px, 1.8vw, 25px);
+      font-weight: 800;
+      background: var(--white);
+      padding: 10px 22px;
+      border-radius: 16px;
+      border: 3.5px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .start-btn {
+      font-size: clamp(22px, 2vw, 28px);
+      padding: 14px 34px;
+      background: var(--yellow);
+      color: var(--ink);
+      margin-top: 4px;
+    }
+    .cover-right {
+      flex: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mascot-card {
+      background: var(--purple);
+      border: 5px solid var(--ink);
+      border-radius: 36px;
+      box-shadow: 10px 10px 0px var(--ink);
+      padding: 28px;
+      text-align: center;
+      position: relative;
+      animation: bounceSlow 3.6s ease-in-out infinite;
+    }
+
+    /* SLIDE 2: OBJECTIVES */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+    .obj-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      padding: 24px 20px;
+    }
+    .obj-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 22px;
+      border: 3.5px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: var(--white);
+    }
+    .obj-card h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(22px, 2vw, 28px);
+      color: var(--ink);
+    }
+    .obj-card p {
+      font-size: clamp(19px, 1.6vw, 23px);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .obj-id {
+      font-size: clamp(17px, 1.35vw, 19px);
+      font-weight: 700;
+      background: rgba(255,255,255,0.85);
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 2.5px solid var(--ink);
+      width: 100%;
+    }
+
+    /* SLIDE 3: WARM-UP STAND UP SIT DOWN */
+    .rule-banner {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .rule-pill {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(19px, 1.7vw, 24px);
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 18px;
+      border: 3.5px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+    .grid-8 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      width: 100%;
+    }
+    .warmup-item {
+      background: var(--white);
+      border: 4px solid var(--ink);
+      border-radius: 22px;
+      box-shadow: 5px 5px 0px var(--ink);
+      padding: 14px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .warmup-item:hover {
+      transform: translateY(-4px);
+      background: var(--yellow-light);
+    }
+    .warmup-item.called {
+      background: var(--yellow);
+      transform: scale(1.05);
+      box-shadow: 7px 7px 0px var(--ink);
+      animation: pulsePop 0.4s ease;
+    }
+    .warmup-emoji {
+      font-size: clamp(42px, 4vw, 56px);
+      display: block;
+      margin-bottom: 6px;
+    }
+    .warmup-label {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(20px, 1.8vw, 26px);
+      font-weight: 700;
+    }
+    .called-tag {
+      display: none;
+      position: absolute;
+      top: -10px;
+      right: -8px;
+      background: var(--pink);
+      color: var(--white);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 14px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 2.5px solid var(--ink);
+    }
+    .warmup-item.called .called-tag {
+      display: block;
+    }
+
+    /* SLIDE 4: STAIRCASE SCALE */
+    .stairs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      align-items: end;
+      height: 100%;
+      padding-top: 10px;
+    }
+    .stair-card {
+      border: 4px solid var(--ink);
+      border-radius: 24px;
+      box-shadow: 6px 6px 0px var(--ink);
+      padding: 18px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .stair-card:hover {
+      transform: translateY(-6px);
+    }
+    .stair-emoji {
+      font-size: clamp(48px, 4.5vw, 66px);
+      animation: bounceSlow 3s ease-in-out infinite;
+    }
+    .stair-word {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(24px, 2.3vw, 32px);
+      font-weight: 700;
+      background: var(--white);
+      padding: 4px 16px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+    }
+    .stair-meaning {
+      font-size: clamp(19px, 1.6vw, 23px);
+      font-weight: 800;
+    }
+    .meter-bar {
+      width: 100%;
+      height: 16px;
+      background: var(--white);
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%;
+      background: var(--ink);
+    }
+
+    /* SLIDE 5: GRAMMAR FORMULA */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      width: 100%;
+    }
+    .formula-box {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .formula-header {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(24px, 2.2vw, 32px);
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 16px;
+      border: 3.5px solid var(--ink);
+      background: var(--white);
+      display: inline-block;
+      align-self: flex-start;
+    }
+    .rule-row {
+      background: var(--white);
+      border: 3px solid var(--ink);
+      border-radius: 18px;
+      padding: 14px 18px;
+      font-size: clamp(20px, 1.75vw, 24px);
+      font-weight: 800;
+      line-height: 1.4;
+    }
+    .hl-verb {
+      background: var(--yellow);
+      padding: 2px 10px;
+      border-radius: 10px;
+      border: 2.5px solid var(--ink);
+      font-family: 'Fredoka', sans-serif;
+    }
+    .hl-s {
+      background: var(--pink);
+      color: var(--white);
+      padding: 2px 10px;
+      border-radius: 10px;
+      border: 2.5px solid var(--ink);
+      font-family: 'Fredoka', sans-serif;
+    }
+    .warning-badge {
+      background: var(--yellow);
+      border: 3px solid var(--ink);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: clamp(18px, 1.5vw, 21px);
+      font-weight: 900;
+      text-align: center;
+      box-shadow: 3px 3px 0px var(--ink);
+    }
+
+    /* SLIDE 6: QUESTIONS & SHORT ANSWERS */
+    .qa-card {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .speech-q {
+      background: var(--yellow);
+      border: 3.5px solid var(--ink);
+      border-radius: 20px;
+      padding: 14px 20px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(24px, 2.2vw, 32px);
+      font-weight: 700;
+      box-shadow: 4px 4px 0px var(--ink);
+    }
+    .ans-toggle-row {
+      display: flex;
+      gap: 14px;
+    }
+    .ans-pill {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 3.5px solid var(--ink);
+      box-shadow: 4px 4px 0px var(--ink);
+      font-size: clamp(20px, 1.8vw, 25px);
+      font-weight: 800;
+      text-align: center;
+      cursor: pointer;
+      background: var(--white);
+      transition: transform 0.15s;
+    }
+    .ans-pill:hover {
+      transform: scale(1.03);
+    }
+    .ans-pill.yes.selected {
+      background: var(--mint);
+    }
+    .ans-pill.no.selected {
+      background: var(--pink);
+      color: var(--white);
+    }
+
+    /* SLIDE 7: QUICK-FIRE CHALLENGE (INTERACTIVE REVEAL) */
+    .qf-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .qf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      width: 100%;
+    }
+    .qf-row {
+      background: var(--white);
+      border: 3.5px solid var(--ink);
+      border-radius: 18px;
+      box-shadow: 5px 5px 0px var(--ink);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .qf-sentence {
+      font-size: clamp(21px, 1.9vw, 27px);
+      font-weight: 800;
+    }
+    .qf-choice {
+      background: var(--purple-light);
+      color: var(--purple);
+      padding: 2px 12px;
+      border-radius: 10px;
+      border: 2.5px solid var(--ink);
+      font-family: 'Fredoka', sans-serif;
+    }
+    .qf-reveal-btn {
+      font-size: clamp(17px, 1.45vw, 20px);
+      padding: 8px 18px;
+      background: var(--yellow);
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .qf-answer-box {
+      display: none;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(18px, 1.55vw, 22px);
+      font-weight: 700;
+      background: var(--mint);
+      color: var(--ink);
+      padding: 7px 16px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0px var(--ink);
+      animation: popIn 0.25s ease;
+    }
+
+    /* SLIDE 8: KEY VOCABULARY FLASHCARDS */
+    .vocab-card {
+      background: var(--white);
+      border: 4px solid var(--ink);
+      border-radius: 22px;
+      box-shadow: 5px 5px 0px var(--ink);
+      padding: 14px 12px;
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.18s;
+    }
+    .vocab-card:hover {
+      transform: translateY(-4px);
+    }
+    .vocab-emoji {
+      font-size: clamp(38px, 3.6vw, 50px);
+    }
+    .vocab-en {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(22px, 2vw, 28px);
+      font-weight: 700;
+    }
+    .vocab-id {
+      font-size: clamp(18px, 1.5vw, 21px);
+      font-weight: 800;
+      background: var(--yellow-light);
+      padding: 4px 12px;
+      border-radius: 10px;
+      border: 2.5px solid var(--ink);
+      width: 92%;
+    }
+    .vocab-card.hidden-meaning .vocab-id {
+      background: var(--purple);
+      color: var(--white);
+    }
+
+    /* SLIDE 9: LISTENING RULES */
+    .rules-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      width: 100%;
+    }
+    .rule-strip {
+      border: 3.5px solid var(--ink);
+      border-radius: 18px;
+      box-shadow: 5px 5px 0px var(--ink);
+      padding: 11px 22px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: clamp(20px, 1.8vw, 25px);
+      font-weight: 800;
+    }
+    .rule-num {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 22px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 3px solid var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* SLIDE 10: LISTENING TIPS */
+    .tips-row {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+    }
+    .tip-step {
+      flex: 1;
+      border: 4px solid var(--ink);
+      border-radius: 26px;
+      box-shadow: 6px 6px 0px var(--ink);
+      padding: 24px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .tip-arrow {
+      display: flex;
+      align-items: center;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* SLIDE 11: TODAY'S MISSION (LKPD) */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      width: 100%;
+    }
+    .mission-card {
+      border: 4px solid var(--ink);
+      border-radius: 22px;
+      box-shadow: 5px 5px 0px var(--ink);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .mission-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .part-badge {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(20px, 1.7vw, 24px);
+      font-weight: 700;
+      background: var(--white);
+      padding: 4px 14px;
+      border-radius: 12px;
+      border: 3px solid var(--ink);
+    }
+    .pts-badge {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 17px;
+      background: var(--ink);
+      color: var(--yellow);
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .mission-card p {
+      font-size: clamp(19px, 1.6vw, 22px);
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    /* SLIDE 12: LET'S CHECK INTERACTIVE BOARD */
+    .check-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .tab-btn {
+      font-size: clamp(18px, 1.5vw, 21px);
+      padding: 8px 18px;
+      background: var(--white);
+      color: var(--ink);
+    }
+    .tab-btn.active {
+      background: var(--purple);
+      color: var(--white);
+    }
+    .check-panel {
+      display: none;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 18px;
+      width: 100%;
+    }
+    .check-panel.active {
+      display: grid;
+    }
+    .check-tile {
+      background: var(--white);
+      border: 3px solid var(--ink);
+      border-radius: 16px;
+      box-shadow: 4px 4px 0px var(--ink);
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: clamp(18px, 1.55vw, 21px);
+      font-weight: 800;
+    }
+    .secret-ans {
+      font-family: 'Fredoka', sans-serif;
+      padding: 5px 14px;
+      border-radius: 12px;
+      border: 2.5px solid var(--ink);
+      background: var(--yellow);
+      cursor: pointer;
+      font-size: clamp(17px, 1.45vw, 20px);
+      white-space: nowrap;
+    }
+    .secret-ans.revealed {
+      background: var(--mint);
+      animation: pulsePop 0.3s ease;
+    }
+
+    /* SLIDE 13: SUMMARY & QUIZ TIME */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .sum-pill {
+      border: 3.5px solid var(--ink);
+      border-radius: 18px;
+      box-shadow: 4px 4px 0px var(--ink);
+      padding: 12px 16px;
+      text-align: center;
+      font-size: clamp(18px, 1.55vw, 21px);
+      font-weight: 800;
+    }
+    .reflect-emojis {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin: 10px 0;
+    }
+    .ref-btn {
+      font-size: clamp(18px, 1.5vw, 21px);
+      padding: 10px 16px;
+      background: var(--white);
+    }
+    .ref-btn.picked {
+      background: var(--yellow);
+      transform: scale(1.06);
+    }
+    .stars-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .star-btn {
+      font-size: 38px;
+      cursor: pointer;
+      filter: grayscale(100%);
+      transition: transform 0.15s, filter 0.15s;
+    }
+    .star-btn.lit {
+      filter: grayscale(0%);
+      transform: scale(1.18);
+    }
+  </style>
+</head>
+<body>
+
+<div id="presentation-stage">
+
+  <!-- Floating Cartoon SVG Doodles -->
+  <svg class="doodle doodle-1" width="64" height="64" viewBox="0 0 64 64" fill="none">
+    <path d="M32 6L38.5 22.5L56 24L42.5 35.5L46.5 53L32 43.5L17.5 53L21.5 35.5L8 24L25.5 22.5L32 6Z" fill="#FACC15" stroke="#1E1B4B" stroke-width="4" stroke-linejoin="round"/>
+  </svg>
+  <svg class="doodle doodle-2" width="58" height="58" viewBox="0 0 64 64" fill="none">
+    <circle cx="20" cy="46" r="9" fill="#FB7185" stroke="#1E1B4B" stroke-width="4"/>
+    <circle cx="46" cy="40" r="9" fill="#38BDF8" stroke="#1E1B4B" stroke-width="4"/>
+    <path d="M29 46V16L55 10V40" stroke="#1E1B4B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg class="doodle doodle-3" width="68" height="44" viewBox="0 0 80 50" fill="none">
+    <path d="M20 40H60C67.7 40 74 33.7 74 26C74 18.8 68.5 12.9 61.5 12.1C58.8 6.2 52.8 2 45.8 2C37.2 2 30.1 8.2 28.8 16.4C27.2 15.8 25.4 15.5 23.5 15.5C15.5 15.5 9 22 9 30C9 35.5 13.9 40 20 40Z" fill="#E0F2FE" stroke="#1E1B4B" stroke-width="4"/>
+  </svg>
+  <svg class="doodle doodle-4" width="54" height="54" viewBox="0 0 64 64" fill="none">
+    <rect x="10" y="10" width="44" height="44" rx="14" fill="#34D399" stroke="#1E1B4B" stroke-width="4" transform="rotate(12 32 32)"/>
+  </svg>
+
+  <!-- ==================== SLIDE 1: COVER ==================== -->
+  <section class="slide active" id="slide-1">
+    <div class="slide-body">
+      <div class="cover-stage">
+        <div class="cover-left">
+          <div class="cover-badge">📚 ENGLISH GRADE VII • SEMESTER 1</div>
+          <h1 class="cover-main-title">LIKE AND DISLIKES</h1>
+          <div class="cover-sub">🎧 Listening Practice: Natalie &amp; Todd</div>
+          <div class="presenter-box">
+            <span>👩‍🏫</span>
+            <span>By: <strong>Vinka Aulia Putri Farasti</strong></span>
+          </div>
+          <button class="c-btn start-btn" onclick="goToSlide(2)">START LESSON ▶</button>
+        </div>
+        <div class="cover-right">
+          <div class="mascot-card">
+            <!-- Cute Cartoon Headphones & Smiling Pizza SVG -->
+            <svg width="260" height="240" viewBox="0 0 260 240" fill="none">
+              <!-- Headphone Band -->
+              <path d="M46 135C46 82 84 42 130 42C176 42 214 82 214 135" stroke="#1E1B4B" stroke-width="14" stroke-linecap="round"/>
+              <path d="M46 135C46 82 84 42 130 42C176 42 214 82 214 135" stroke="#FACC15" stroke-width="7" stroke-linecap="round"/>
+              <!-- Left Ear Cup -->
+              <rect x="24" y="114" width="34" height="64" rx="16" fill="#FB7185" stroke="#1E1B4B" stroke-width="5"/>
+              <!-- Right Ear Cup -->
+              <rect x="202" y="114" width="34" height="64" rx="16" fill="#FB7185" stroke="#1E1B4B" stroke-width="5"/>
+              <!-- Happy Face Circle -->
+              <circle cx="130" cy="142" r="68" fill="#FFFBEB" stroke="#1E1B4B" stroke-width="5"/>
+              <!-- Eyes -->
+              <circle cx="107" cy="130" r="8" fill="#1E1B4B"/>
+              <circle cx="153" cy="130" r="8" fill="#1E1B4B"/>
+              <circle cx="104" cy="127" r="3" fill="#FFFFFF"/>
+              <circle cx="150" cy="127" r="3" fill="#FFFFFF"/>
+              <!-- Rosy Cheeks -->
+              <ellipse cx="94" cy="148" rx="10" ry="6" fill="#FB7185" opacity="0.7"/>
+              <ellipse cx="166" cy="148" rx="10" ry="6" fill="#FB7185" opacity="0.7"/>
+              <!-- Big Smile -->
+              <path d="M110 154C116 168 144 168 150 154" stroke="#1E1B4B" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+            <div style="font-family:'Fredoka',sans-serif; font-size:22px; color:#FFF; margin-top:6px;">
+              Listen Carefully, Speak Confidently! ✨
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 2: LEARNING OBJECTIVES ==================== -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <h2 class="slide-title">Our Learning Goals Today 🎯</h2>
+      <span class="topic-pill">Step 1 • Goals</span>
+    </div>
+    <div class="slide-body">
+      <div class="grid-3">
+        <div class="c-card obj-card" style="background: var(--yellow-light);">
+          <div class="obj-icon">👂</div>
+          <h3>1. Identify Expressions</h3>
+          <p>Recognize <strong>love, like, don't like,</strong> and <strong>hate</strong> in spoken conversations.</p>
+          <div class="obj-id">Mengenali ungkapan suka &amp; tidak suka dalam percakapan lisan.</div>
+        </div>
+        <div class="c-card obj-card" style="background: var(--blue-light);">
+          <div class="obj-icon">🔍</div>
+          <h3>2. Find Specific Info</h3>
+          <p>Catch main ideas &amp; details (colors, food, seasons, sports, movies) from audio.</p>
+          <div class="obj-id">Menemukan gagasan utama &amp; informasi rinci dari audio.</div>
+        </div>
+        <div class="c-card obj-card" style="background: var(--mint-light);">
+          <div class="obj-icon">✍️</div>
+          <h3>3. Use Correct Grammar</h3>
+          <p>Use <strong>like / likes</strong> and <strong>don't / doesn't like</strong> accurately with subjects.</p>
+          <div class="obj-id">Menggunakan pola kalimat dengan tepat sesuai subjek.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 3: WARM-UP STAND UP - SIT DOWN ==================== -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <h2 class="slide-title">Ice Breaking: Stand Up – Sit Down! 🏃‍♂️🪑</h2>
+      <span class="topic-pill">Click Cards to Call!</span>
+    </div>
+    <div class="slide-body">
+      <div class="rule-banner">
+        <div class="rule-pill" style="background: var(--mint);">👍 STAND UP &amp; Say: <em>"I like ...!"</em></div>
+        <div class="rule-pill" style="background: var(--pink); color: #FFF;">👎 STAY SEATED &amp; Say: <em>"I don't like ...!"</em></div>
+      </div>
+      <div class="grid-8">
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">🍕</span>
+          <div class="warmup-label">Pizza</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">🌧️</span>
+          <div class="warmup-label">Rainy Day</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">📚</span>
+          <div class="warmup-label">Homework</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">⚽</span>
+          <div class="warmup-label">Football</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">🍈</span>
+          <div class="warmup-label">Durian</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">🍦</span>
+          <div class="warmup-label">Ice Cream</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">🐱</span>
+          <div class="warmup-label">Cats</div>
+        </div>
+        <div class="warmup-item" onclick="toggleWarmup(this)">
+          <span class="called-tag">CALLED!</span>
+          <span class="warmup-emoji">👻</span>
+          <div class="warmup-label">Horror Movie</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 4: SCALE OF PREFERENCE ==================== -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <h2 class="slide-title">How Much Do You Like It? 📊</h2>
+      <span class="topic-pill">Scale of Preference</span>
+    </div>
+    <div class="slide-body">
+      <div class="stairs-grid">
+        <div class="stair-card" style="height: 100%; background: var(--mint);">
+          <div class="stair-emoji">😍</div>
+          <div class="stair-word">LOVE</div>
+          <div class="stair-meaning">Sangat Suka (100%)</div>
+          <div class="meter-bar"><div class="meter-fill" style="width: 100%;"></div></div>
+        </div>
+        <div class="stair-card" style="height: 84%; background: var(--blue-light);">
+          <div class="stair-emoji">👍</div>
+          <div class="stair-word">LIKE</div>
+          <div class="stair-meaning">Suka (75%)</div>
+          <div class="meter-bar"><div class="meter-fill" style="width: 75%;"></div></div>
+        </div>
+        <div class="stair-card" style="height: 68%; background: var(--orange-light);">
+          <div class="stair-emoji">👎</div>
+          <div class="stair-word">DON'T LIKE</div>
+          <div class="stair-meaning">Tidak Suka (25%)</div>
+          <div class="meter-bar"><div class="meter-fill" style="width: 25%;"></div></div>
+        </div>
+        <div class="stair-card" style="height: 54%; background: var(--pink);">
+          <div class="stair-emoji">😡</div>
+          <div class="stair-word">HATE</div>
+          <div class="stair-meaning" style="color: #FFF;">Sangat Tidak Suka (0%)</div>
+          <div class="meter-bar"><div class="meter-fill" style="width: 5%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 5: THE GRAMMAR FORMULA ==================== -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <h2 class="slide-title">The Magic Formula! ✨</h2>
+      <span class="topic-pill">Grammar Focus</span>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <!-- Positive Box -->
+        <div class="c-card formula-box" style="background: var(--blue-light);">
+          <div class="formula-header">➕ POSITIVE (+)</div>
+          <div class="rule-row">
+            <strong>I / You / We / They</strong> + <span class="hl-verb">LIKE</span><br />
+            <span style="color:#0369A1;">Example:</span> <em>"I like pizza."</em>
+          </div>
+          <div class="rule-row">
+            <strong>He / She / It</strong> + <span class="hl-s">LIKES (+ -S)</span><br />
+            <span style="color:#0369A1;">Example:</span> <em>"She <u>likes</u> tennis."</em>
+          </div>
+          <div class="warning-badge" style="background: var(--mint-light);">
+            ⭐ Subject tunggal (He, She, Natalie) wajib tambah <strong>-S</strong>!
+          </div>
+        </div>
+
+        <!-- Negative Box -->
+        <div class="c-card formula-box" style="background: var(--pink-light);">
+          <div class="formula-header">➖ NEGATIVE (-)</div>
+          <div class="rule-row">
+            <strong>I / You / We / They</strong> + <span class="hl-verb">DON'T LIKE</span><br />
+            <span style="color:#BE123C;">Example:</span> <em>"They don't like spicy food."</em>
+          </div>
+          <div class="rule-row">
+            <strong>He / She / It</strong> + <span class="hl-s">DOESN'T LIKE</span><br />
+            <span style="color:#BE123C;">Example:</span> <em>"He <u>doesn't like</u> winter."</em>
+          </div>
+          <div class="warning-badge">
+            ⚠️ INGAT! Setelah <strong>DOESN'T</strong>, kata kerja kembali ke <strong>LIKE (TANPA -S)</strong>!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 6: QUESTIONS & SHORT ANSWERS ==================== -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <h2 class="slide-title">Asking &amp; Answering 💬</h2>
+      <span class="topic-pill">Click Answers to Practice!</span>
+    </div>
+    <div class="slide-body">
+      <div class="grid-2">
+        <!-- Card 1 -->
+        <div class="c-card qa-card" style="background: var(--purple-light);">
+          <div style="font-family:'Fredoka',sans-serif; font-size:20px; color:var(--purple);">👥 With: I / You / We / They</div>
+          <div class="speech-q">🗣️ "<strong>Do</strong> you like pizza?"</div>
+          <div class="ans-toggle-row">
+            <div class="ans-pill yes selected" onclick="toggleQaPill(this)">✅ Yes, I do.</div>
+            <div class="ans-pill no" onclick="toggleQaPill(this)">❌ No, I don't.</div>
+          </div>
+          <div style="font-size:19px; font-weight:800; text-align:center;">
+            Ask your benchmate: <em>"Do you like spicy food?"</em>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="c-card qa-card" style="background: var(--yellow-light);">
+          <div style="font-family:'Fredoka',sans-serif; font-size:20px; color:#B45309;">👤 With: He / She / It</div>
+          <div class="speech-q" style="background: var(--blue); color: #FFF;">🗣️ "<strong>Does</strong> she like winter?"</div>
+          <div class="ans-toggle-row">
+            <div class="ans-pill yes selected" onclick="toggleQaPill(this)">✅ Yes, she does.</div>
+            <div class="ans-pill no" onclick="toggleQaPill(this)">❌ No, she doesn't.</div>
+          </div>
+          <div style="font-size:19px; font-weight:800; text-align:center;">
+            Notice: After <strong>Does</strong>, use <strong>like</strong> (no -s)!
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 7: QUICK-FIRE CHALLENGE ==================== -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <h2 class="slide-title">Quick-Fire Challenge! ⚡</h2>
+      <div style="display:flex; gap:10px;">
+        <button class="c-btn" style="padding:8px 16px; background:var(--mint); font-size:18px;" onclick="revealAllQf(true)">👀 Reveal All</button>
+        <button class="c-btn" style="padding:8px 16px; background:var(--white); font-size:18px;" onclick="revealAllQf(false)">🔄 Reset</button>
+      </div>
+    </div>
+    <div class="slide-body">
+      <div class="qf-list">
+        <!-- Q1 -->
+        <div class="qf-row">
+          <div class="qf-sentence">1. She <span class="qf-choice">( like / likes )</span> tennis.</div>
+          <div>
+            <button class="c-btn qf-reveal-btn" id="qf-btn-1" onclick="revealQf(1)">🔍 Reveal Answer</button>
+            <div class="qf-answer-box" id="qf-ans-1">✅ LIKES (Subject: She + -s)</div>
+          </div>
+        </div>
+        <!-- Q2 -->
+        <div class="qf-row">
+          <div class="qf-sentence">2. He <span class="qf-choice">( don't / doesn't )</span> like durian.</div>
+          <div>
+            <button class="c-btn qf-reveal-btn" id="qf-btn-2" onclick="revealQf(2)">🔍 Reveal Answer</button>
+            <div class="qf-answer-box" id="qf-ans-2">✅ DOESN'T (After doesn't, no -s!)</div>
+          </div>
+        </div>
+        <!-- Q3 -->
+        <div class="qf-row">
+          <div class="qf-sentence">3. They <span class="qf-choice">( like / likes )</span> music.</div>
+          <div>
+            <button class="c-btn qf-reveal-btn" id="qf-btn-3" onclick="revealQf(3)">🔍 Reveal Answer</button>
+            <div class="qf-answer-box" id="qf-ans-3">✅ LIKE (Subject: They)</div>
+          </div>
+        </div>
+        <!-- Q4 -->
+        <div class="qf-row">
+          <div class="qf-sentence">4. Natalie <span class="qf-choice">( don't / doesn't )</span> like thick pizza.</div>
+          <div>
+            <button class="c-btn qf-reveal-btn" id="qf-btn-4" onclick="revealQf(4)">🔍 Reveal Answer</button>
+            <div class="qf-answer-box" id="qf-ans-4">✅ DOESN'T (Natalie = She)</div>
+          </div>
+        </div>
+        <!-- Q5 -->
+        <div class="qf-row">
+          <div class="qf-sentence">5. I <span class="qf-choice">( love / loves )</span> ice cream!</div>
+          <div>
+            <button class="c-btn qf-reveal-btn" id="qf-btn-5" onclick="revealQf(5)">🔍 Reveal Answer</button>
+            <div class="qf-answer-box" id="qf-ans-5">✅ LOVE (Subject: I)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 8: KEY VOCABULARY ==================== -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <h2 class="slide-title">Key Vocabulary 🔑</h2>
+      <button class="c-btn" style="padding:8px 18px; background:var(--purple); color:#FFF; font-size:18px;" onclick="toggleAllVocab()">🎭 Hide / Show Meanings</button>
+    </div>
+    <div class="slide-body">
+      <div class="grid-8">
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Kesukaan / Favorit">
+          <span class="vocab-emoji">❤️</span>
+          <div class="vocab-en">Favorite</div>
+          <div class="vocab-id">Kesukaan / Favorit</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Pedas">
+          <span class="vocab-emoji">🌶️</span>
+          <div class="vocab-en">Spicy</div>
+          <div class="vocab-id">Pedas</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Isian atas pizza">
+          <span class="vocab-emoji">🍕</span>
+          <div class="vocab-en">Topping</div>
+          <div class="vocab-id">Isian atas pizza</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Tebal">
+          <span class="vocab-emoji">🍞</span>
+          <div class="vocab-en">Thick</div>
+          <div class="vocab-id">Tebal</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Tipis">
+          <span class="vocab-emoji">🥞</span>
+          <div class="vocab-en">Thin</div>
+          <div class="vocab-id">Tipis</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Musim">
+          <span class="vocab-emoji">❄️</span>
+          <div class="vocab-en">Season</div>
+          <div class="vocab-id">Musim</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Salju">
+          <span class="vocab-emoji">⛄</span>
+          <div class="vocab-en">Snow</div>
+          <div class="vocab-id">Salju</div>
+        </div>
+        <div class="vocab-card" onclick="toggleSingleVocab(this)" data-meaning="Film komedi / lucu">
+          <span class="vocab-emoji">😂</span>
+          <div class="vocab-en">Comedy</div>
+          <div class="vocab-id">Film komedi / lucu</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 9: OUR LISTENING RULES ==================== -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <h2 class="slide-title">Our Listening Rules 🎧</h2>
+      <span class="topic-pill">Ready to Listen!</span>
+    </div>
+    <div class="slide-body">
+      <div class="rules-stack">
+        <div class="rule-strip" style="background: var(--blue-light);">
+          <div class="rule-num">1</div>
+          <div>🤫 <strong>Listen quietly and carefully</strong> while the audio is playing.</div>
+        </div>
+        <div class="rule-strip" style="background: var(--yellow-light);">
+          <div class="rule-num">2</div>
+          <div>🔑 <strong>Focus on key words:</strong> <em>love, like, hate, don't like</em>.</div>
+        </div>
+        <div class="rule-strip" style="background: var(--mint-light);">
+          <div class="rule-num">3</div>
+          <div>✍️ <strong>Work independently</strong> — write your answers with a pencil first!</div>
+        </div>
+        <div class="rule-strip" style="background: var(--purple-light);">
+          <div class="rule-num">4</div>
+          <div>🔁 Audio will be played <strong>maximum 2 times</strong>.</div>
+        </div>
+        <div class="rule-strip" style="background: var(--pink-light);">
+          <div class="rule-num">5</div>
+          <div>🌟 <strong>It's OK to make mistakes!</strong> We will check together.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 10: LISTENING TIPS ==================== -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <h2 class="slide-title">Super Listening Tips! 💡</h2>
+      <span class="topic-pill">3 Easy Steps</span>
+    </div>
+    <div class="slide-body">
+      <div class="tips-row">
+        <div class="tip-step" style="background: var(--yellow);">
+          <div style="font-size: 62px;">👀</div>
+          <div class="part-badge">STEP 1: BEFORE</div>
+          <h3 style="font-family:'Fredoka',sans-serif; font-size:28px;">Read Questions First!</h3>
+          <p style="font-size:21px; font-weight:800;">Baca soal LKPD sebelum audio diputar agar tahu kata kunci yang dicari.</p>
+        </div>
+        <div class="tip-arrow">➔</div>
+        <div class="tip-step" style="background: var(--mint);">
+          <div style="font-size: 62px;">👂</div>
+          <div class="part-badge">STEP 2: WHILE</div>
+          <h3 style="font-family:'Fredoka',sans-serif; font-size:28px;">Catch Key Words!</h3>
+          <p style="font-size:21px; font-weight:800;">Tidak perlu paham semua kata! Fokus pada <em>love, like, hate,</em> &amp; topik.</p>
+        </div>
+        <div class="tip-arrow">➔</div>
+        <div class="tip-step" style="background: var(--blue-light);">
+          <div style="font-size: 62px;">🤝</div>
+          <div class="part-badge">STEP 3: AFTER</div>
+          <h3 style="font-family:'Fredoka',sans-serif; font-size:28px;">Peer Check!</h3>
+          <p style="font-size:21px; font-weight:800;">Periksa kembali jawabanmu dan diskusikan bersama teman sebangku.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 11: TODAY'S MISSION (LKPD) ==================== -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header">
+      <h2 class="slide-title">Today's Mission: Natalie &amp; Todd 🚀</h2>
+      <span class="topic-pill">LKPD • Max Score: 40</span>
+    </div>
+    <div class="slide-body">
+      <div class="mission-grid">
+        <div class="mission-card" style="background: var(--yellow-light);">
+          <div class="mission-top"><span class="part-badge">PART A</span><span class="pts-badge">6 pts</span></div>
+          <p>🔤 <strong>Match the Words</strong><br />Cocokkan 6 kosakata kunci dengan artinya.</p>
+        </div>
+        <div class="mission-card" style="background: var(--blue-light);">
+          <div class="mission-top"><span class="part-badge">PART B</span><span class="pts-badge">10 pts</span></div>
+          <p>☑️ <strong>Who Likes What?</strong><br />Centang: <em>Natalie, Todd,</em> atau <em>Both</em>.</p>
+        </div>
+        <div class="mission-card" style="background: var(--pink-light);">
+          <div class="mission-top"><span class="part-badge">PART C</span><span class="pts-badge">6 pts</span></div>
+          <p>⭕ <strong>True or False?</strong><br />Lingkari T (Benar) atau F (Salah).</p>
+        </div>
+        <div class="mission-card" style="background: var(--mint-light);">
+          <div class="mission-top"><span class="part-badge">PART D</span><span class="pts-badge">6 pts</span></div>
+          <p>🎯 <strong>Choose Best Answer</strong><br />Pilih jawaban a, b, c, atau d yang tepat.</p>
+        </div>
+        <div class="mission-card" style="background: var(--purple-light);">
+          <div class="mission-top"><span class="part-badge">PART E</span><span class="pts-badge">6 pts</span></div>
+          <p>✏️ <strong>Complete Sentences</strong><br />Isi dengan <em>like / likes / don't / doesn't like</em>.</p>
+        </div>
+        <div class="mission-card" style="background: var(--orange-light);">
+          <div class="mission-top"><span class="part-badge">PART F</span><span class="pts-badge">6 pts</span></div>
+          <p>🗣️ <strong>My Turn! Report It!</strong><br />Tulis 3 kalimatmu sendiri + <em>because</em>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 12: LET'S CHECK TOGETHER! ==================== -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header">
+      <h2 class="slide-title">Let's Check Together! ✅</h2>
+      <span class="topic-pill">Click Boxes to Reveal Answers!</span>
+    </div>
+    <div class="slide-body" style="justify-content: flex-start;">
+      <div class="check-tabs">
+        <button class="c-btn tab-btn active" onclick="switchCheckTab('A', this)">Part A (6)</button>
+        <button class="c-btn tab-btn" onclick="switchCheckTab('B', this)">Part B (10)</button>
+        <button class="c-btn tab-btn" onclick="switchCheckTab('C', this)">Part C (6)</button>
+        <button class="c-btn tab-btn" onclick="switchCheckTab('D', this)">Part D (6)</button>
+        <button class="c-btn tab-btn" onclick="switchCheckTab('E', this)">Part E (6)</button>
+        <button class="c-btn" style="margin-left:auto; padding:8px 16px; background:var(--mint); font-size:17px;" onclick="revealCurrentTabAll()">✨ Reveal Current Part</button>
+      </div>
+
+      <!-- PART A PANEL -->
+      <div class="check-panel active" id="panel-A">
+        <div class="check-tile"><span>1. favorite</span><span class="secret-ans" data-ans="b (kesukaan)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>2. spicy</span><span class="secret-ans" data-ans="c (pedas)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>3. topping</span><span class="secret-ans" data-ans="f (isian pizza)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>4. thick</span><span class="secret-ans" data-ans="d (tebal)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>5. comedy</span><span class="secret-ans" data-ans="e (film komedi)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>6. season</span><span class="secret-ans" data-ans="a (musim)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+      </div>
+
+      <!-- PART B PANEL -->
+      <div class="check-panel" id="panel-B">
+        <div class="check-tile"><span>1. Favorite color is purple</span><span class="secret-ans" data-ans="✓ Both" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>2. Love pizza</span><span class="secret-ans" data-ans="✓ Both" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>3. Likes spicy toppings</span><span class="secret-ans" data-ans="✓ Natalie" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>4. Doesn't like thick pizza</span><span class="secret-ans" data-ans="✓ Natalie" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>5. Hates winter</span><span class="secret-ans" data-ans="✓ Todd" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>6. Loves snow &amp; skiing</span><span class="secret-ans" data-ans="✓ Natalie" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>7. Favorite sport is tennis</span><span class="secret-ans" data-ans="✓ Natalie" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>8. Likes "Ace Ventura"</span><span class="secret-ans" data-ans="✓ Both" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>9. Likes comedies (no fav movie)</span><span class="secret-ans" data-ans="✓ Natalie" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>10. Doesn't have purple clothes</span><span class="secret-ans" data-ans="✓ Todd" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+      </div>
+
+      <!-- PART C PANEL -->
+      <div class="check-panel" id="panel-C">
+        <div class="check-tile"><span>1. Todd has no purple clothes</span><span class="secret-ans" data-ans="⭕ T (True)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>2. Natalie likes big pizzas</span><span class="secret-ans" data-ans="❌ F (False)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>3. Thin pizza = lots of toppings</span><span class="secret-ans" data-ans="⭕ T (True)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>4. Todd likes winter very much</span><span class="secret-ans" data-ans="❌ F (False)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>5. Natalie plays tennis very well</span><span class="secret-ans" data-ans="❌ F (False)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>6. Watches tennis on TV all the time</span><span class="secret-ans" data-ans="⭕ T (True)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+      </div>
+
+      <!-- PART D PANEL -->
+      <div class="check-panel" id="panel-D">
+        <div class="check-tile"><span>1. Main topic of conversation</span><span class="secret-ans" data-ans="b. Their favorite things" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>2. Why not thick pizza?</span><span class="secret-ans" data-ans="c. Can't eat too much" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>3. Why does Natalie like winter?</span><span class="secret-ans" data-ans="a. She loves the snow" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>4. Todd about cold weather</span><span class="secret-ans" data-ans="b. He hates it" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>5. How often tennis lessons?</span><span class="secret-ans" data-ans="c. About twice a week" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>6. What kind of movies?</span><span class="secret-ans" data-ans="b. Comedies" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+      </div>
+
+      <!-- PART E PANEL -->
+      <div class="check-panel" id="panel-E">
+        <div class="check-tile"><span>1. Natalie ____ spicy toppings.</span><span class="secret-ans" data-ans="likes" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>2. Natalie ____ thick pizza.</span><span class="secret-ans" data-ans="doesn't like" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>3. Todd ____ winter.</span><span class="secret-ans" data-ans="doesn't like (hates)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>4. Natalie &amp; Todd ____ pizza.</span><span class="secret-ans" data-ans="like" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>5. Todd ____ cold weather.</span><span class="secret-ans" data-ans="doesn't like (hates)" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+        <div class="check-tile"><span>6. Natalie ____ snowball fights.</span><span class="secret-ans" data-ans="likes" onclick="revealTile(this)">Click to Reveal 🔒</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 13: SUMMARY & QUIZ TIME ==================== -->
+  <section class="slide" id="slide-13">
+    <div class="slide-header">
+      <h2 class="slide-title">Summary &amp; Quiz Time! 🏆</h2>
+      <span class="topic-pill">Great Job, Class!</span>
+    </div>
+    <div class="slide-body">
+      <div class="summary-strip">
+        <div class="sum-pill" style="background: var(--yellow-light);">
+          💬 <strong>Expressions:</strong><br />love • like • don't like • hate
+        </div>
+        <div class="sum-pill" style="background: var(--blue-light);">
+          ✨ <strong>Grammar:</strong><br />He/She/It + <u>likes / doesn't like</u>
+        </div>
+        <div class="sum-pill" style="background: var(--mint-light);">
+          🎧 <strong>Listening Strategy:</strong><br />Read first &amp; catch key words!
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Quiz Card -->
+        <div class="c-card" style="background: var(--purple-light); text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 10px;">
+          <div style="font-size: 46px;">📝</div>
+          <h3 style="font-family:'Fredoka',sans-serif; font-size: 30px;">Individual Quiz Time!</h3>
+          <p style="font-size: 21px; font-weight: 800;">
+            10 Multiple Choice Questions<br />
+            Do your best and work honestly! 🌟
+          </p>
+        </div>
+
+        <!-- Interactive Reflection Card -->
+        <div class="c-card" style="background: var(--pink-light); text-align: center; display: flex; flex-direction: column; justify-content: center; gap: 6px;">
+          <h3 style="font-family:'Fredoka',sans-serif; font-size: 26px;">How Do You Feel Today? 💭</h3>
+          <div class="reflect-emojis">
+            <button class="c-btn ref-btn" onclick="pickReflection(this)">😍 Got it!</button>
+            <button class="c-btn ref-btn" onclick="pickReflection(this)">🙂 Almost!</button>
+            <button class="c-btn ref-btn" onclick="pickReflection(this)">🤔 Need help</button>
+          </div>
+          <div style="font-size: 19px; font-weight: 800;">Rate today's lesson (Click stars!):</div>
+          <div class="stars-row" id="stars-row">
+            <span class="star-btn lit" onclick="rateStars(1)">⭐</span>
+            <span class="star-btn lit" onclick="rateStars(2)">⭐</span>
+            <span class="star-btn lit" onclick="rateStars(3)">⭐</span>
+            <span class="star-btn lit" onclick="rateStars(4)">⭐</span>
+            <span class="star-btn lit" onclick="rateStars(5)">⭐</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BOTTOM NAVIGATION BAR ==================== -->
+  <nav id="nav-bar">
+    <button class="c-btn nav-btn" onclick="prevSlide()">◀ Prev</button>
+    <div class="progress-wrap">
+      <div class="dots-container" id="dots-container"></div>
+      <div class="slide-counter" id="slide-counter">1 / 13</div>
+    </div>
+    <button class="c-btn nav-btn next" onclick="nextSlide()">Next ▶</button>
+  </nav>
+
+</div>
+
+<script>
+  const totalSlides = 13;
+  let currentSlide = 1;
+
+  // Initialize progress dots
+  const dotsContainer = document.getElementById('dots-container');
+  for (let i = 1; i <= totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 1 ? ' active' : '');
+    dot.title = `Slide ${i}`;
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function goToSlide(n) {
+    if (n < 1) n = 1;
+    if (n > totalSlides) n = totalSlides;
+    currentSlide = n;
+
+    document.querySelectorAll('.slide').forEach((s, idx) => {
+      s.classList.toggle('active', idx + 1 === currentSlide);
+    });
+
+    document.querySelectorAll('.dot').forEach((d, idx) => {
+      d.classList.toggle('active', idx + 1 === currentSlide);
+    });
+
+    document.getElementById('slide-counter').textContent = `${currentSlide} / ${totalSlides}`;
+  }
+
+  function nextSlide() {
+    if (currentSlide < totalSlides) goToSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    if (currentSlide > 1) goToSlide(currentSlide - 1);
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      // Avoid triggering nextSlide if focused on a button
+      if (document.activeElement.tagName !== 'BUTTON') {
+        e.preventDefault();
+        nextSlide();
+      }
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      prevSlide();
+    }
+  });
+
+  // Slide 3: Warm-up card toggle
+  function toggleWarmup(el) {
+    el.classList.toggle('called');
+  }
+
+  // Slide 6: Q&A highlight toggle
+  function toggleQaPill(el) {
+    const siblings = el.parentElement.querySelectorAll('.ans-pill');
+    siblings.forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  // Slide 7: Quick-Fire Challenge Reveal
+  function revealQf(num) {
+    document.getElementById(`qf-btn-${num}`).style.display = 'none';
+    document.getElementById(`qf-ans-${num}`).style.display = 'inline-block';
+  }
+
+  function revealAllQf(show) {
+    for (let i = 1; i <= 5; i++) {
+      document.getElementById(`qf-btn-${i}`).style.display = show ? 'none' : 'inline-flex';
+      document.getElementById(`qf-ans-${i}`).style.display = show ? 'inline-block' : 'none';
+    }
+  }
+
+  // Slide 8: Vocabulary Flashcards Toggle
+  let vocabHidden = false;
+  function toggleSingleVocab(card) {
+    const idBox = card.querySelector('.vocab-id');
+    const meaning = card.getAttribute('data-meaning');
+    if (card.classList.contains('hidden-meaning')) {
+      card.classList.remove('hidden-meaning');
+      idBox.textContent = meaning;
+    } else {
+      card.classList.add('hidden-meaning');
+      idBox.textContent = '❓ Click to Reveal';
+    }
+  }
+
+  function toggleAllVocab() {
+    vocabHidden = !vocabHidden;
+    document.querySelectorAll('.vocab-card').forEach(card => {
+      const idBox = card.querySelector('.vocab-id');
+      const meaning = card.getAttribute('data-meaning');
+      if (vocabHidden) {
+        card.classList.add('hidden-meaning');
+        idBox.textContent = '❓ Click to Reveal';
+      } else {
+        card.classList.remove('hidden-meaning');
+        idBox.textContent = meaning;
+      }
+    });
+  }
+
+  // Slide 12: Let's Check Interactive Tabs & Reveal Tiles
+  function switchCheckTab(part, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.check-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(`panel-${part}`).classList.add('active');
+  }
+
+  function revealTile(el) {
+    if (!el.classList.contains('revealed')) {
+      el.classList.add('revealed');
+      el.textContent = el.getAttribute('data-ans');
+    } else {
+      el.classList.remove('revealed');
+      el.textContent = 'Click to Reveal 🔒';
+    }
+  }
+
+  function revealCurrentTabAll() {
+    const activePanel = document.querySelector('.check-panel.active');
+    activePanel.querySelectorAll('.secret-ans').forEach(el => {
+      el.classList.add('revealed');
+      el.textContent = el.getAttribute('data-ans');
+    });
+  }
+
+  // Slide 13: Reflection Emoji & Stars
+  function pickReflection(btn) {
+    document.querySelectorAll('.ref-btn').forEach(b => b.classList.remove('picked'));
+    btn.classList.add('picked');
+  }
+
+  function rateStars(count) {
+    const stars = document.querySelectorAll('#stars-row .star-btn');
+    stars.forEach((star, idx) => {
+      star.classList.toggle('lit', idx < count);
+    });
+  }
+</script>
+</body>
+</html>
